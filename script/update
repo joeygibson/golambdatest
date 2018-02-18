@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+aws lambda update-function-code --function-name golambdatest --zip-file fileb://./main.zip
+

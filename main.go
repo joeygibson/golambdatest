@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/sirupsen/logrus"
+	"fmt"
 )
 
 type EchoRequest struct {
@@ -92,15 +93,19 @@ func HandleRequest(ctx context.Context, req EchoRequest) (EchoResponse, error) {
 	logrus.Infof("REQ: %+v", req)
 
 	intentName := req.Request.Intent.Name
-
 	logrus.Infof("Intent: %s", intentName)
 
+	appId := req.Session.Application.ApplicationID
+	logrus.Infof("App Id: %s", appId)
+
+	resText := fmt.Sprintf("TEST: Called by: %s", appId)
+	
 	res := EchoResponse{
 		Version: "1.0",
 		Response: EchoRespBody{
 			OutputSpeech: &EchoRespPayload{
 				Type: "PlainText",
-				Text: "This is a test",
+				Text: resText,
 			},
 			ShouldEndSession: true,
 		},
